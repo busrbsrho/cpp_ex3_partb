@@ -17,7 +17,7 @@ namespace ariel{
         Fraction(float num);
 
         /* getters and setters to the members */
-        int getDemonator() const;
+        int getDenominator() const;
         int getNumerator() const;
         void setDemonator(int) ;
         void setNumerator(int) ;
@@ -68,7 +68,7 @@ namespace ariel{
         bool operator>= (const Fraction& other) const;
         friend bool operator>= (float frac1, const Fraction& frac2);
         friend bool operator>= (const Fraction& frac2, float frac1);
-        bool operator<= (Fraction& other) const;
+        bool operator<= (const Fraction& other) const;
         friend bool operator<= (float frac1, const Fraction& frac2);
         friend bool operator<= (const Fraction& frac2, float frac1);
         
@@ -86,6 +86,6 @@ namespace ariel{
         
         // IO operators
         friend std::ostream& operator<< (std::ostream& output, const Fraction& frac);
-        friend std::istream& operator>> (std::istream& input, const Fraction& frac);
+        friend std::istream& operator>> (std::istream& input, Fraction& frac);
     }; // end of Fraction class
 }

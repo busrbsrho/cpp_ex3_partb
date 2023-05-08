@@ -4,6 +4,16 @@
 using namespace ariel;
 using namespace std;
 
+int gcd(int a , int b){
+
+     if (b == 0) {
+            return a;
+        }
+
+        return gcd(b, a % b);
+    }
+
+
 
 Fraction::Fraction(int nume, int denom) : numerator(nume), demonator(denom){ //main constructor
     if(denom == 0){
@@ -17,20 +27,19 @@ float ariel::FractionToFloat(const Fraction& a) {
 }
 
 Fraction::Fraction(float num) {
-        float abc =(int)(num * 1000) % 1000;
-        this-> numerator =  abc * 1000;
-        this->demonator = 1000;
-        simsum();
-
-
-
+    int abc = num * 1000;
+    int common = gcd(abc, 1000);
+    this->numerator = abc/ common;
+    this->demonator = 1000 /common;
 }
+
+
 
 int Fraction::getNumerator() const{
     return this->numerator;
 }
 
-int Fraction::getDemonator() const{
+int Fraction::getDenominator() const{
     return this->demonator;
 }
 
@@ -71,7 +80,7 @@ Fraction Fraction::operator- (const Fraction& other) const{
             else
             {
             denom = this->demonator * other.demonator;
-            nume= denom*this->numerator - denom*other.numerator;
+            nume= other.demonator*this->numerator - this->demonator*other.numerator;
             }
             
         return Fraction(nume,denom);
@@ -85,6 +94,7 @@ Fraction ariel::operator- (float f1, const Fraction& f2){
 }
 
 Fraction ariel::operator- (const Fraction& f2, float f1){
+
     return f2-Fraction(f1);
 }
 
@@ -106,7 +116,7 @@ Fraction ariel::operator* (float f1, const Fraction& f2){
 }
 
 Fraction ariel::operator* (const Fraction& f2, float f1){
-    return f2*f1;
+    return f1* f2;
 }
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -176,7 +186,7 @@ bool ariel::operator>= (float f1, const Fraction& f2){
 
 
 bool ariel::operator>= (const Fraction& f2, float f1){
-    return f2 > Fraction(f1);;
+    return f2 > Fraction(f1);
 
 }
 
@@ -185,16 +195,21 @@ bool ariel::operator>= (const Fraction& f2, float f1){
 
 /////////////////////////////////////////////////////////
 
-bool Fraction::operator<= (Fraction& other) const{
-    return false;
+bool Fraction::operator<= (const Fraction& other) const{
+    if( this->numerator*other.demonator <= other.numerator * this->demonator)
+        return true;
+    else
+        return false;    
+        
 }
 
 bool ariel::operator<= (float f1, const Fraction& f2){
-    return false;
+   return Fraction(f1) <= f2;
 }
 
+
 bool ariel::operator<= (const Fraction& f2, float f1){
-    return false;
+    return f2 <= Fraction(f1);
 
 }
 
@@ -216,7 +231,10 @@ Fraction& Fraction::operator++(){
 }
 
 const Fraction Fraction::operator++(int){
-    return *this;
+    Fraction temp(*this);
+    numerator += demonator;
+    return temp;
+
 }
 
 Fraction& Fraction::operator--(){
@@ -224,34 +242,31 @@ Fraction& Fraction::operator--(){
     return *this;
 }
 
-const Fraction Fraction::operator--(int){
-    return *this;
+const Fraction Fraction::operator--(int){ 
+    Fraction temp(*this);
+    numerator -= demonator;
+    return temp;
 }
 
 bool ariel::operator== (const Fraction& f1, const Fraction& f2){
-    return false;
+    return f1.demonator==f2.demonator && f1.numerator==f2.numerator;
 }
 
 std::ostream& ariel::operator<< (std::ostream& output, const Fraction& a){
     
-    output << a.getNumerator() << "/" << a.getDemonator();
+    output << a.getNumerator() << "/" << a.getDenominator();
     return output;
 }
 
-std::istream& ariel::operator>> (std::istream& input, const Fraction& f){
-   
+std::istream& ariel::operator>> (std::istream& input, Fraction& f) {
+    int numerator, denominator;
+    char slash;
+    input >> numerator >> slash >> denominator;
+    f = Fraction(numerator, denominator);
     return input;
 }
 
 
-int gcd(int a , int b){
-
-     if (b == 0) {
-            return a;
-        }
-
-        return gcd(b, a % b);
-    }
 
 
 void Fraction::simsum(){
