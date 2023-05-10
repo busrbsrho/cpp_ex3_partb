@@ -13,6 +13,9 @@ namespace ariel{
         // initializer constructor
         Fraction(int mone, int mechane);
 
+
+       Fraction() : demonator(1), numerator(0) {}
+
         // Constructor for convert float to fraction
         Fraction(float num);
 
@@ -26,15 +29,33 @@ namespace ariel{
         
        
        
-        friend float FractionToFloat(const Fraction& a);
+        
 
 
         
         Fraction operator+ (const Fraction& other) const
         {
-        int den = this->demonator * other.demonator;
-        int num = this->numerator * other.demonator + other.numerator * this->demonator;
-        return Fraction(num, den);
+                
+            int den = this->demonator * other.demonator;
+            int num = this->numerator * other.demonator + other.numerator * this->demonator;
+
+            if(this->numerator >0 && other.numerator>0)
+                {
+                    if (this->numerator * other.demonator + other.numerator * this->demonator <0)
+                    {
+                        std::__throw_overflow_error("overflow");
+                    }
+                    
+                }
+            if (this->numerator <0 && other.numerator<0)
+                {
+                    if (this->numerator * other.demonator + other.numerator * this->demonator >0)
+                    {
+                        std::__throw_overflow_error("overflow");
+                    }
+                }
+                
+            return Fraction(num, den);
         }
 
 
@@ -87,5 +108,12 @@ namespace ariel{
         // IO operators
         friend std::ostream& operator<< (std::ostream& output, const Fraction& frac);
         friend std::istream& operator>> (std::istream& input, Fraction& frac);
-    }; // end of Fraction class
+        // end of Fraction class
+
+
+
+
+       
+
+    }; 
 }

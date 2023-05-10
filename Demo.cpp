@@ -20,15 +20,18 @@ int main() {
    // Fraction a(5,3), b(14,21) ,d(1.75);
     Fraction a(1, 2), b(1, 4);
     Fraction c = a * b;
-    Fraction d(4, 5);
+    Fraction d(-4, 5);
     float e = 0.4;
-    Fraction f = d * e;
+    Fraction f (-3.141);
     istringstream is("5 6"); // Could also be "5,6" for ex
     istringstream bad_is("7");
     
+
+     
+
     cout << "f : " << f << endl;
-    cout << "a: " << a << "b: " << b << endl;
-    cout << "a+b" << a+b << endl; 
+    cout << "f numerator * d denominator  " << f.getNumerator()*d.getDenominator()  << "b: " << b << endl;
+    cout << "d numerator * f denominator " << d.getNumerator()*f.getDenominator() << endl; 
     cout << "a-b" << a-b << endl; 
     cout << "a/b" << a/b << endl; 
     cout << "a*b" << a*b << endl; 
@@ -39,8 +42,8 @@ int main() {
     cout << --c << endl;
 
     cout << "c >=b ? : " << (c >= b) << endl;
-    if (a <= 1) cout << " a is smaller than 1" << endl;
-    else cout << " a is bigger than 1" << endl;
+    if (d<f) cout << " d is smaller than f" << endl;
+    else cout << " d is bigger than f" << endl;
 
 
 }

@@ -121,8 +121,8 @@ TEST_SUITE("Overloaded <= and >= operators tests") {
     TEST_CASE("Fraction comparison with floating point numbers") {
         Fraction frac1{1, 2};
         Fraction frac2{3, 4};
-        double float_num1 = 0.5;
-        double float_num2 = 0.75;
+        float float_num1 = 0.5;
+        float float_num2 = 0.75;
 
         SUBCASE(">= operator test") {
             CHECK_GE(frac1, float_num1);
